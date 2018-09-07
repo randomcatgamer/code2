@@ -110,7 +110,7 @@ Resources:
     Properties:
       ApplicationName: !Ref EBWorkerApplication
       Description: 'Imagery worker: AWS in Action: chapter 16'
-      SolutionStackName: '64bit Amazon Linux 2017.09 v4.4.0 running Node.js'
+      SolutionStackName: '64bit Amazon Linux 2018.03 v4.5.3 running Node.js'
       OptionSettings:
       - Namespace: 'aws:autoscaling:launchconfiguration'
         OptionName: 'EC2KeyName'
@@ -118,6 +118,9 @@ Resources:
       - Namespace: 'aws:autoscaling:launchconfiguration'
         OptionName: 'IamInstanceProfile'
         Value: !Ref WorkerInstanceProfile
+      - Namespace: 'aws:autoscaling:launchconfiguration'
+        OptionName: 'InstanceType'
+        Value: 't2.nano'
       - Namespace: 'aws:elasticbeanstalk:sqsd'
         OptionName: 'WorkerQueueURL'
         Value: !Ref SQSQueue
@@ -223,11 +226,14 @@ Resources:
     Properties:
       ApplicationName: !Ref EBServerApplication
       Description: 'Imagery server: AWS in Action: chapter 16'
-      SolutionStackName: '64bit Amazon Linux 2017.09 v4.4.0 running Node.js'
+      SolutionStackName: '64bit Amazon Linux 2018.03 v4.5.3 running Node.js'
       OptionSettings:
       - Namespace: 'aws:autoscaling:asg'
         OptionName: 'MinSize'
-        Value: '2'
+        Value: '1'
+      - Namespace: 'aws:autoscaling:launchconfiguration'
+        OptionName: 'InstanceType'
+        Value: 't2.micro'
       - Namespace: 'aws:autoscaling:launchconfiguration'
         OptionName: 'EC2KeyName'
         Value: !Ref KeyName
